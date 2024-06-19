@@ -9,7 +9,7 @@ public class MainController {
 
     @RequestMapping(value = { "/"})
     public String main(){
-        return "main";
+        return "main1";
     }
     /*
     * RequestToViewNameTranslator(interface)
