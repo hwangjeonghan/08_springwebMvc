@@ -70,40 +70,41 @@ public class FileUploadController {
         Resource resource = resourceLoader.getResource("classpath:static/img/multi");
         String filePath = null;
 
-        if(resource.exists()){
+        if(!resource.exists()){
             String root = "src/main/resources/static/img/multi";
             File file = new File(root);
             file.mkdirs();
             filePath = file.getAbsolutePath();
-        }else {
+        }else{
             filePath = resourceLoader.getResource("classpath:static/img/multi").getFile().getAbsolutePath();
         }
 
         List<FileDTO> files = new ArrayList<>();
         List<String> saveFiles = new ArrayList<>();
+        try{
+            for(MultipartFile file : multipartFiles){
+                String originFileName = file.getOriginalFilename();
+                String ext = originFileName.substring(originFileName.lastIndexOf("."));
+                String savedName = UUID.randomUUID().toString().replace("-", "")+ext;
 
-        try {
+                files.add(new FileDTO(originFileName, savedName, filePath, multiFileDescription));
 
-        for(MultipartFile file : multipartFiles){
-            String originFileName = file.getOriginalFilename();
-            String ext = originFileName.substring(originFileName.lastIndexOf("."));
-            String savedName = UUID.randomUUID().toString().replace("-","") + ext;
-
-            files.add(new FileDTO(originFileName, savedName, filePath, multiFileDescription));
-
-            file.transferTo(new File( filePath+"/"+savedName));
-            saveFiles.add("static/img/multi/"+savedName);
-        }
-        model.addAttribute("message", "파일업로드 성공!");
-        model.addAttribute("imgs", saveFiles);
+                file.transferTo(new File(filePath+"/"+savedName));
+                saveFiles.add("static/img/multi/"+savedName);
+            }
+            model.addAttribute("message", "파일 업로드 성공!");
+            model.addAttribute("imgs", saveFiles);
         }catch (Exception e){
             e.printStackTrace();
 
-            for( FileDTO file: files){
-                new File(filePath+ "/"+ file.getSaveFileName()).delete();
+            for (FileDTO file: files) {
+                new File(filePath + "/" + file.getSaveName()).delete();
             }
             model.addAttribute("message", "파일 업로드 실패!");
         }
-        return  "result";
+        return "result";
+
+
+
     }
 }

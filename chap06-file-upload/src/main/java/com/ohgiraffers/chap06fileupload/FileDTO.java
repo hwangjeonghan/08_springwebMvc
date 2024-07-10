@@ -5,7 +5,7 @@ public class FileDTO {
     private String originalFileName;
     // 파일원본이름은 데이터 베이스에 저장한다.
 
-    private String saveFileName;
+    private String saveName;
     // 애도 데이터베이스에 저장 원본,변경이름 ,저장경로,설명
 
     private String filePath;
@@ -15,9 +15,9 @@ public class FileDTO {
     public FileDTO() {
     }
 
-    public FileDTO(String originalFileName, String saveFileName, String filePath, String fileDescription) {
+    public FileDTO(String originalFileName, String saveName, String filePath, String fileDescription) {
         this.originalFileName = originalFileName;
-        this.saveFileName = saveFileName;
+        this.saveName = saveName;
         this.filePath = filePath;
         this.fileDescription = fileDescription;
     }
@@ -30,12 +30,12 @@ public class FileDTO {
         this.originalFileName = originalFileName;
     }
 
-    public String getSaveFileName() {
-        return saveFileName;
+    public String getSaveName() {
+        return saveName;
     }
 
-    public void setSaveFileName(String saveFileName) {
-        this.saveFileName = saveFileName;
+    public void setSaveName(String saveName) {
+        this.saveName = saveName;
     }
 
     public String getFilePath() {
@@ -58,7 +58,7 @@ public class FileDTO {
     public String toString() {
         return "FileDTO{" +
                 "originalFileName='" + originalFileName + '\'' +
-                ", saveFileName='" + saveFileName + '\'' +
+                ", saveName='" + saveName + '\'' +
                 ", filePath='" + filePath + '\'' +
                 ", fileDescription='" + fileDescription + '\'' +
                 '}';
